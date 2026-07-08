@@ -84,6 +84,3 @@ SmartLender/
 ├── static/
 └── templates/
 ```
-
-## Developed By
-Ratna Priyanka Maddula
