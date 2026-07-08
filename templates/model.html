@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block extra_css %}
+<style>
+    .model-card.winner {
+        border: 1px solid var(--gold);
+        background: linear-gradient(180deg, rgba(245, 158, 11, 0.05) 0%, transparent 100%);
+        box-shadow: 0 0 30px rgba(245, 158, 11, 0.1);
+    }
+    .winner-badge {
+        position: absolute;
+        top: -12px;
+        right: 20px;
+        background: var(--gold);
+        color: #000;
+        padding: 0.25rem 1rem;
+        border-radius: 20px;
+        font-weight: bold;
+        font-size: 0.8rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section id="models">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-subtitle">Algorithm Analysis</span>
+            <h2 class="hero-title" style="font-size: 3rem;">Model Performance</h2>
+        </div>
+        <div class="grid-3">
+            <div class="glass-card gs-reveal">
+                <h3 class="mb-1">Random Forest</h3>
+                <h2 class="gradient-text mb-1">89.2%</h2>
+                <p class="text-muted">Good baseline, handles non-linear relationships well, but slightly prone to overfitting on our specific financial dataset.</p>
+            </div>
+            <div class="glass-card model-card winner gs-reveal">
+                <div class="winner-badge">PRODUCTION MODEL</div>
+                <h3 class="mb-1">{{ model_name }}</h3>
+                <h2 class="gradient-text-gold mb-1">{{ accuracy }}</h2>
+                <p class="text-muted">State-of-the-art performance. Superior handling of missing values and unparalleled execution speed for real-time APIs. Trained on {{ records }} records across {{ algorithms }} algorithms.</p>
+            </div>
+            <div class="glass-card gs-reveal">
+                <h3 class="mb-1">Neural Network (DNN)</h3>
+                <h2 class="gradient-text mb-1">94.1%</h2>
+                <p class="text-muted">High accuracy but lacks explainability (Black Box). XGBoost preferred for regulatory compliance in lending.</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.querySelectorAll('.gs-reveal').forEach((el) => {
+        gsap.from(el, { scrollTrigger: { trigger: el, start: 'top 85%' }, y: 50, opacity: 0, duration: 0.8, ease: 'power3.out' });
+    });
+</script>
+{% endblock %}

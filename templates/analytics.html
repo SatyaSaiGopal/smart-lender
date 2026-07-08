@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block extra_css %}
+<style>
+    .chart-container {
+        position: relative;
+        height: 300px;
+        width: 100%;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section id="dashboard">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-subtitle">Analytics</span>
+            <h2 class="hero-title" style="font-size: 3rem;">Dataset Insights</h2>
+        </div>
+        <div class="grid-2">
+            <div class="glass-card gs-reveal">
+                <h3 class="mb-2 text-center">Historical Approval Ratio</h3>
+                <div class="chart-container">
+                    <canvas id="pieChart"></canvas>
+                </div>
+            </div>
+            <div class="glass-card gs-reveal">
+                <h3 class="mb-2 text-center">Income vs Loan Amount (Normalized)</h3>
+                <div class="chart-container">
+                    <canvas id="barChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.querySelectorAll('.gs-reveal').forEach((el) => {
+        gsap.from(el, { scrollTrigger: { trigger: el, start: 'top 85%' }, y: 50, opacity: 0, duration: 0.8, ease: 'power3.out' });
+    });
+
+    // Charts (Chart.js)
+    Chart.defaults.color = '#9CA3AF';
+    Chart.defaults.font.family = "'Inter', sans-serif";
+
+    // Pie Chart
+    new Chart(document.getElementById('pieChart'), {
+        type: 'doughnut',
+        data: {
+            labels: ['Approved', 'Rejected'],
+            datasets: [{
+                data: [68.7, 31.3],
+                backgroundColor: ['rgba(16, 185, 129, 0.8)', 'rgba(239, 68, 68, 0.8)'],
+                borderColor: ['#10B981', '#EF4444'],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: { legend: { position: 'bottom' } },
+            cutout: '70%'
+        }
+    });
+
+    // Bar Chart
+    new Chart(document.getElementById('barChart'), {
+        type: 'bar',
+        data: {
+            labels: ['Low', 'Medium', 'High', 'Very High'],
+            datasets: [{
+                label: 'Avg Loan Amt requested',
+                data: [120, 190, 300, 500],
+                backgroundColor: 'rgba(37, 99, 235, 0.6)',
+                borderColor: '#2563EB',
+                borderWidth: 1,
+                borderRadius: 4
+            }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.05)' } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+</script>
+{% endblock %}

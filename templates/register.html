@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section id="register" style="padding: 4rem 0; display: flex; align-items: center; justify-content: center; min-height: 80vh;">
+    <div class="container" style="max-width: 500px; width: 100%;">
+        <div class="glass-card gs-reveal">
+            <h2 class="hero-title text-center" style="font-size: 2.5rem; margin-bottom: 0.5rem;">Create Account</h2>
+            <p class="text-muted text-center" style="margin-bottom: 2rem;">Join the AI-powered lending platform.</p>
+            
+            {% if error %}
+            <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid var(--accent-red); color: var(--accent-red); padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; text-align: center;">
+                {{ error }}
+            </div>
+            {% endif %}
+
+            <form action="{{ url_for('register') }}" method="POST">
+                <div class="input-group" style="position: relative; margin-bottom: 1.5rem;">
+                    <input type="text" name="fullname" id="fullname" required style="width: 100%; padding: 1rem 0; background: transparent; border: none; border-bottom: 2px solid var(--glass-border); color: white; font-size: 1rem; font-family: var(--font-body); outline: none; transition: all 0.3s ease;">
+                    <label style="position: absolute; top: -0.5rem; left: 0; font-size: 0.8rem; color: var(--cyan); pointer-events: none; transition: all 0.3s ease;">Full Name</label>
+                </div>
+
+                <div class="input-group" style="position: relative; margin-bottom: 1.5rem;">
+                    <input type="email" name="email" id="email" required style="width: 100%; padding: 1rem 0; background: transparent; border: none; border-bottom: 2px solid var(--glass-border); color: white; font-size: 1rem; font-family: var(--font-body); outline: none; transition: all 0.3s ease;">
+                    <label style="position: absolute; top: -0.5rem; left: 0; font-size: 0.8rem; color: var(--cyan); pointer-events: none; transition: all 0.3s ease;">Email</label>
+                </div>
+
+                <div class="input-group" style="position: relative; margin-bottom: 1.5rem;">
+                    <input type="text" name="username" id="username" required style="width: 100%; padding: 1rem 0; background: transparent; border: none; border-bottom: 2px solid var(--glass-border); color: white; font-size: 1rem; font-family: var(--font-body); outline: none; transition: all 0.3s ease;">
+                    <label style="position: absolute; top: -0.5rem; left: 0; font-size: 0.8rem; color: var(--cyan); pointer-events: none; transition: all 0.3s ease;">Username</label>
+                </div>
+                
+                <div class="input-group" style="position: relative; margin-bottom: 2.5rem;">
+                    <input type="password" name="password" id="password" required style="width: 100%; padding: 1rem 0; background: transparent; border: none; border-bottom: 2px solid var(--glass-border); color: white; font-size: 1rem; font-family: var(--font-body); outline: none; transition: all 0.3s ease;">
+                    <label style="position: absolute; top: -0.5rem; left: 0; font-size: 0.8rem; color: var(--cyan); pointer-events: none; transition: all 0.3s ease;">Password</label>
+                </div>
+                
+                <button type="submit" class="btn btn-primary" style="width: 100%; font-size: 1.2rem;">Register</button>
+            </form>
+            
+            <p class="text-center text-muted" style="margin-top: 1.5rem;">
+                Already have an account? <a href="{{ url_for('login') }}" style="color: var(--cyan); text-decoration: none;">Sign in here</a>
+            </p>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    gsap.from('.glass-card', { y: 30, opacity: 0, duration: 0.8, ease: 'power3.out' });
+</script>
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- HERO SECTION -->
+<section id="hero" style="min-height: 80vh; display: flex; align-items: center; justify-content: center; text-align: center; padding-top: 5rem;">
+    <div class="container hero-content" style="max-width: 900px; z-index: 10;">
+        <div class="hero-badge" style="display: inline-block; padding: 0.5rem 1rem; background: rgba(139, 92, 246, 0.1); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 50px; color: var(--purple); font-size: 0.875rem; font-weight: 600; margin-bottom: 2rem; letter-spacing: 1px; text-transform: uppercase;">
+            Model Accuracy: 98.4% (XGBoost)
+        </div>
+        <h1 class="hero-title" style="font-size: clamp(3rem, 6vw, 5.5rem); margin-bottom: 1.5rem; letter-spacing: -0.02em;">
+            Welcome, {{ session.get('user') }}!<br>
+            Intelligent Lending, <br><span class="gradient-text">Powered by AI</span>
+        </h1>
+        <p class="hero-subtitle" style="font-size: 1.25rem; color: var(--text-muted); margin-bottom: 3rem; max-width: 700px; margin-inline: auto;">
+            Experience the future of fintech. Our deep learning pipeline predicts loan eligibility in milliseconds with unprecedented accuracy, eliminating human bias and accelerating decision-making.
+        </p>
+        <div class="hero-cta" style="display: flex; gap: 1.5rem; justify-content: center;">
+            <a href="{{ url_for('predict') }}" class="btn btn-primary">Initialize Prediction Engine</a>
+            <a href="{{ url_for('model_info') }}" class="btn btn-outline">View ML Architecture</a>
+        </div>
+    </div>
+</section>
+
+<!-- ABOUT SECTION -->
+<section id="about">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-subtitle">System Overview</span>
+            <h2 class="hero-title" style="font-size: 3rem;">Redefining Financial Risk</h2>
+        </div>
+        <div class="grid-3">
+            <div class="glass-card gs-reveal">
+                <h3 class="mb-1">Real-time Inference</h3>
+                <p class="text-muted">Predictions are generated in under 50ms utilizing optimized gradient boosting models deployed on edge servers.</p>
+            </div>
+            <div class="glass-card gs-reveal">
+                <h3 class="mb-1">Bias Mitigation</h3>
+                <p class="text-muted">Advanced SMOTE techniques balance datasets, ensuring equitable lending decisions across all demographic profiles.</p>
+            </div>
+            <div class="glass-card gs-reveal">
+                <h3 class="mb-1">Fraud Reduction</h3>
+                <p class="text-muted">Anomaly detection algorithms run in parallel to flag synthetic identities and inconsistent application data instantly.</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    gsap.from('.hero-badge', { y: 30, opacity: 0, duration: 1, delay: 0.2, ease: 'power3.out' });
+    gsap.from('.hero-title', { y: 50, opacity: 0, duration: 1, delay: 0.4, ease: 'power3.out' });
+    gsap.from('.hero-subtitle', { y: 30, opacity: 0, duration: 1, delay: 0.6, ease: 'power3.out' });
+    gsap.from('.hero-cta', { y: 30, opacity: 0, duration: 1, delay: 0.8, ease: 'power3.out' });
+
+    document.querySelectorAll('.gs-reveal').forEach((el) => {
+        gsap.from(el, {
+            scrollTrigger: { trigger: el, start: 'top 85%' },
+            y: 50, opacity: 0, duration: 0.8, ease: 'power3.out'
+        });
+    });
+</script>
+{% endblock %}

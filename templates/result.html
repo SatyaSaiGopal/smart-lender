@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+
+{% block extra_css %}
+<style>
+    /* Result State */
+    #result-state {
+        text-align: center;
+        width: 100%;
+        padding: 4rem 2rem;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    .result-circle {
+        width: 150px; height: 150px; border-radius: 50%; margin: 0 auto 2rem;
+        display: flex; align-items: center; justify-content: center; font-size: 4rem; position: relative;
+    }
+    
+    .result-approved .result-circle {
+        background: rgba(16, 185, 129, 0.1); border: 2px solid var(--accent-green);
+        color: var(--accent-green); box-shadow: 0 0 40px rgba(16, 185, 129, 0.3);
+    }
+    .result-rejected .result-circle {
+        background: rgba(239, 68, 68, 0.1); border: 2px solid var(--accent-red);
+        color: var(--accent-red); box-shadow: 0 0 40px rgba(239, 68, 68, 0.3);
+    }
+    
+    .stats-row {
+        display: flex; justify-content: center; gap: 2rem; margin-top: 3rem;
+    }
+    .stat-item { text-align: center; }
+    .stat-value { font-family: var(--font-head); font-size: 1.5rem; font-weight: 700; }
+    .stat-label { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+</style>
+{% endblock %}
+
+{% block content %}
+<section id="application">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-subtitle">Analysis Complete</span>
+            <h2 class="hero-title" style="font-size: 3rem;">Prediction Result</h2>
+        </div>
+
+        <div class="glass-card gs-reveal" style="max-width: 900px; margin: 0 auto;">
+            
+            {% if prediction == "approved" %}
+            <div id="result-state" class="result-approved">
+                <div class="result-circle">✓</div>
+                <h2 class="hero-title gradient-text" style="font-size: 3rem; margin-bottom: 0;">Loan Approved</h2>
+                <p class="text-muted">Algorithm has cleared this profile for lending. Low risk detected.</p>
+                
+                <div class="stats-row">
+                    <div class="stat-item">
+                        <div class="stat-value">92.4%</div>
+                        <div class="stat-label">Confidence Score</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" style="color: var(--gold);">XGBoost</div>
+                        <div class="stat-label">Model Used</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">42ms</div>
+                        <div class="stat-label">Latency</div>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div id="result-state" class="result-rejected">
+                <div class="result-circle">✗</div>
+                <h2 class="hero-title" style="font-size: 3rem; margin-bottom: 0; color: var(--accent-red);">Loan Rejected</h2>
+                <p class="text-muted">High risk profile detected. Application denied by model criteria.</p>
+                
+                <div class="stats-row">
+                    <div class="stat-item">
+                        <div class="stat-value">18.7%</div>
+                        <div class="stat-label">Confidence Score</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" style="color: var(--gold);">XGBoost</div>
+                        <div class="stat-label">Model Used</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">45ms</div>
+                        <div class="stat-label">Latency</div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="text-center" style="margin-top: 2rem;">
+                <a href="{{ url_for('predict') }}" class="btn btn-outline">Run New Prediction</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    gsap.from('.glass-card', { y: 30, opacity: 0, duration: 0.8, ease: 'power3.out' });
+    
+    {% if prediction == "approved" %}
+    confetti({
+        particleCount: 150, spread: 80, origin: { y: 0.5 },
+        colors: ['#2563EB', '#06B6D4', '#10B981']
+    });
+    {% endif %}
+</script>
+{% endblock %}

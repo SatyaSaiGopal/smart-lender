@@ -1,0 +1,11 @@
+Flask
+Werkzeug
+pandas
+numpy
+scikit-learn
+xgboost
+imbalanced-learn
+matplotlib
+seaborn
+joblib
+gunicorn
